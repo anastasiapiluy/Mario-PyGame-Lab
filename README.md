@@ -87,7 +87,7 @@ def createLevel(y):
     return[(indent,y,left,20),(indent+left+gap1,y,center,20), (indent+left+gap1+center+gap2,y,right,20)]
 
 def generateLevel():
-    global platforms,direction, coins,cns, monster1, monster2,door,x,y,velY, standing, coinCounter, lives, state, timer
+    global platforms,direction, coins,cns, monster1, monster2,door,x,y,velY, standing, coinCounter, lives, state, timer, moving
     platforms = [(0,screenHeight-ground,fullWidth,ground)]
     levels = [screenHeight-ground-firstLevel,screenHeight-ground-secLevel,screenHeight-ground-thLevel]
     for i in levels:
@@ -109,6 +109,7 @@ def generateLevel():
     monster1, monster2 = generateMonsters(platforms)
     state = "play"
     timer = 0
+    moving = 0
 
 def generateCoins(platforms):
     amount = min(random.randint(3,5), len(platforms))
@@ -134,7 +135,7 @@ def generateMonsters(platforms):
     platf = [p for p in platforms if p[3]!= ground]
     platf = random.sample(platf, 2)
     x,y,w,h = platf[0]
-    first = [x+w//2-monsterSize//2,y-monsterSize,1,x,x+w-monsterSize,1]
+    first = [x+w//2-monsterSize//2,y-monsterSize,1,x,x+w-monsterSize]
     x,y,w,h = platf[1]
     second = [x+w//2-monsterSize//2,y-monsterSize,0, False,1]
     return first,second
@@ -144,11 +145,9 @@ def updateF(m):
     if m[0]<=m[3]:
         m[0] = m[3]
         m[2]=1
-        m[5] = 1
     elif m[0]>=m[4]:
         m[0]=m[4]
         m[2]=-1
-        m[5] = -1
 
 def updateS(m,platforms):
     if m[0]<x:
@@ -270,7 +269,7 @@ while not done:
     if door:
         imgDoor = doorImg
         screen.blit(imgDoor, (door[0]-moving, door[1]))
-    imgMonster1 = monster1ImgR if monster1[5] == 1 else monster1ImgL
+    imgMonster1 = monster1ImgR if monster1[2] == 1 else monster1ImgL
     screen.blit(imgMonster1, (monster1[0]-moving, monster1[1]))
     imgMonster2 = monster2ImgR if monster2[4] == 1 else monster2ImgL
     screen.blit(imgMonster2, (monster2[0]-moving, monster2[1]))
