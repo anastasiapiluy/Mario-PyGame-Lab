@@ -2,8 +2,7 @@
 
 ### Архив с фотографиями
 
-[Использованные спрайты]()
-
+[Использованные спрайты](https://github.com/anastasiapiluy/Mario-PyGame-Lab/blob/main/Lab_Mario.zip)
 
 ### Программа
 
